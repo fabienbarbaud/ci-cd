@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  marp:
+    image: marpteam/marp-cli
+    volumes:
+      - ./:/home/marp/app/:rw
+    environment:
+      - LANG=$LANG
+    command: ci-cd.md --pdf --allow-local-files
