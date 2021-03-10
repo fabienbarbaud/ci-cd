@@ -155,3 +155,89 @@ $ git flow finish -p
 $ git flow hotfix start 0.1.1
 $ git flow finish -p
 ```
+
+---
+
+# Linter
+
+## Outils d'analyse statique
+
+- Javascript : ESLint
+- PHP : PHPLint, PHPStan
+- Python : pylint
+
+---
+
+# Test unitaire
+
+En programmation informatique, le test unitaire (ou « T.U. », ou « U.T. » en anglais) est une procédure permettant de **vérifier** le bon **fonctionnement** d'une **partie précise** d'un logiciel ou d'une **portion d'un programme** (appelée « unité » ou « module »).
+
+[Wikipedia](https://fr.wikipedia.org/wiki/Test_unitaire)
+
+---
+
+# Test fonctionnel
+
+Les tests fonctionnels sont destinés à s’assurer que, **dans le contexte d’utilisation réelle**, le comportement fonctionnel obtenu est **bien conforme** avec celui attendu.
+
+Un test fonctionnel a donc pour objectif de **dérouler un scénario** composé d’une liste d’actions, et pour chaque action d’effectuer une **liste de vérifications** validant la conformité de l’exigence avec l’attendu.
+
+[Qu’est-ce qu’un test fonctionnel ?
+](https://horustest.io/blog/definition-test-fonctionnel/)
+
+---
+
+# Un exemple sur un app Python : Flaskex
+
+## L'app Flaskex
+
+```bash
+$ git clone https://github.com/fabienbarbaud/flaskex
+$ cd flaskex
+$ docker-compose up app
+```
+
+http://localhost:5000
+
+---
+
+# Un exemple sur un app Python : Flaskex
+
+## Le linter
+
+```bash
+$ docker-compose up linter
+```
+
+---
+
+# Un exemple sur un app Python : Flaskex
+
+## Les tests
+
+```bash
+$ docker-compose up test
+```
+
+---
+
+```
+bash-5.0# gitlab-runner register
+Runtime platform                                    arch=amd64 os=linux pid=28 revision=2ebc4dc4 version=13.9.0
+Running in system-mode.
+
+Enter the GitLab instance URL (for example, https://gitlab.com/):
+http://gitlab_gitlab
+Enter the registration token:
+njsxZN7dwq3_tqcxwRMA
+Enter a description for the runner:
+[bd97c11ac68a]:
+Enter tags for the runner (comma-separated):
+
+Registering runner... succeeded                     runner=njsxZN7d
+Enter an executor: virtualbox, docker+machine, docker-ssh+machine, kubernetes, ssh, custom, docker, docker-ssh, parallels, shell:
+docker
+Enter the default Docker image (for example, ruby:2.6):
+pyhton
+Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+```
