@@ -68,6 +68,7 @@ $ docker swarm init
 ```bash
 $ git clone https://github.com/fabienbarbaud/gitlab-docker.git
 $ cd gitlab-docker
+$ docker network create -d overlay cesi --scope swarm --attachable
 $ docker stack deploy --compose-file docker-compose.yml gitlab
 ```
 
@@ -75,7 +76,7 @@ $ docker stack deploy --compose-file docker-compose.yml gitlab
 $ docker service ls
 ```
 
-http://localhost
+http://gitlab.localhost
 u: `root`
 p: `MySuperSecretAndSecurePass0rd!`
 
@@ -221,23 +222,67 @@ $ docker-compose up test
 
 ---
 
+# Selenium
+
+## Selenium automates browsers. That's it!
+
+![](images/selenium_logo_large.png)
+
+https://www.selenium.dev/
+
+---
+
+# Selenium
+
+## Selenium IDE
+
+Open source record and playback test automation for the web
+
+https://www.selenium.dev/selenium-ide/
+
+---
+
+# CI-CD
+
+## Gitlab runner
+
 ```
-bash-5.0# gitlab-runner register
-Runtime platform                                    arch=amd64 os=linux pid=28 revision=2ebc4dc4 version=13.9.0
-Running in system-mode.
+$ docker ps
+$ docker exec -it gitlab_gitlab-runner.1.3hdx4ch6guq5c88xpmed9yk0s bash
+bash-5.0# gitlab-runner \
+    register -n \
+    --name "Docker Runner" \
+    --executor docker \
+    --docker-image docker:latest \
+    --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
+    --url http://gitlab_gitlab \
+    --clone-url http://gitlab_gitlab \
+    --docker-privileged \
+    --docker-network-mode cesi \
+    --registration-token U2TUDvn8fTcNHiVqSBp5
+```
 
-Enter the GitLab instance URL (for example, https://gitlab.com/):
-http://gitlab_gitlab
-Enter the registration token:
-njsxZN7dwq3_tqcxwRMA
-Enter a description for the runner:
-[bd97c11ac68a]:
-Enter tags for the runner (comma-separated):
+---
 
-Registering runner... succeeded                     runner=njsxZN7d
-Enter an executor: virtualbox, docker+machine, docker-ssh+machine, kubernetes, ssh, custom, docker, docker-ssh, parallels, shell:
-docker
-Enter the default Docker image (for example, ruby:2.6):
-pyhton
-Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+# CI-CD
+
+## .gitlab-ci.yml
+
+```yaml
+image: docker:latest
+
+stages:
+  - build
+  - linter
+  - test
+
+build:
+  stage: build
+  script: 
+    - docker build -t image .
+
+linter:
+  stage: linter
+  script:
+    - docker run image bash docker/start_linter.sh
 ```
