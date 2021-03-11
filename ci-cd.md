@@ -74,9 +74,10 @@ $ docker stack deploy --compose-file docker-compose.yml gitlab
 
 ```bash
 $ docker service ls
+$ docker service logs --tail 50 -f gitlab_gitlab
 ```
 
-http://gitlab.localhost
+http://localhost
 u: `root`
 p: `MySuperSecretAndSecurePass0rd!`
 
