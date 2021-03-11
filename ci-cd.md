@@ -260,7 +260,7 @@ bash-5.0# gitlab-runner \
     --clone-url http://gitlab_gitlab \
     --docker-privileged \
     --docker-network-mode cesi \
-    --registration-token U2TUDvn8fTcNHiVqSBp5
+    --registration-token z5xxGJZZpzJp5Wz_s4h3
 ```
 
 ---
@@ -287,3 +287,41 @@ linter:
   script:
     - docker run image bash docker/start_linter.sh
 ```
+
+---
+
+# CI-CD
+
+## Démarrage du service
+
+```bash
+$ docker build -f Dockerfile_prod -t root/flaskex:latest .
+$ docker service create -p 5000:5000 --name flaskex root/flaskex:latest
+```
+
+---
+
+# CI-CD
+
+## Déploiement
+
+```yaml
+deploy:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - docker build -f Dockerfile_prod -t $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME .
+    - docker service update --image $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME flaskex
+```
+
+---
+
+# TP
+
+Mettre en place une application de votre choix dans le langage de votre choix comprenant :
+- un linter
+- des tests unitaires
+- un déploiement
+
+Tout ça sur un projet en CI-CD avec Gitlab et Docker Swarm
